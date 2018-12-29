@@ -1,24 +1,12 @@
 module.exports = (sequelize, Sequelize) => (
-  sequelize.define('User',
+  sequelize.define('Service',
     {
-      email: {
-        type: Sequelize.STRING(40),
-        allowNull: false,
-        unique: true
-      },
-      name: {
+      service: {
         type: Sequelize.STRING(40),
         allowNull: true,
+        unique: true
       },
-      password: {
-        type: Sequelize.STRING(40),
-        allowNull: true
-      },
-      provider: {
-        type: Sequelize.STRING(40),
-        allowNull: true
-      },
-      snsId: {
+      location: {
         type: Sequelize.STRING(40),
         allowNull: true
       },

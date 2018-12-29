@@ -1,23 +1,6 @@
 const Sequelize = require('sequelize')
 const db = {}
 
-
-// sqlite
-// const sequelize = new Sequelize({
-//   dialect: 'mysql',
-//   storage: './db.sqlite',
-//   logging: false,
-// })
-
-// const User = sequelize.define('User', {
-//   // name: Sequelize.STRING, //varchar255
-//   name: {
-//     type: Sequelize.STRING,
-//     unique: true
-//   }
-// })
-
-
 const config = {
   "username": "admin",
   "password": "admin1234",
@@ -41,12 +24,16 @@ const sequelize = new Sequelize(
   }
 )
 
-
-
-
-
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 db.User = require('./user')(sequelize, Sequelize)
+db.Service = require('./service')(sequelize, Sequelize)
+db.Review = require('./review')(sequelize, Sequelize)
+
+db.User.hasMany(db.Review)
+db.Review.belongsTo(db.User)
+
+db.Service.hasMany(db.Review)
+db.Review.belongsTo(db.Service)
 
 module.exports = db
