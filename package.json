@@ -7,6 +7,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
+    "mysql2": "^1.6.4",
     "nodemon": "^1.18.9",
     "sequelize": "^4.42.0",
     "sqlite3": "^4.0.4"
@@ -17,7 +18,7 @@
     "supertest": "^3.3.0"
   },
   "scripts": {
-    "test": "NODE_ENV=test mocha api/user/user.spec.js -w",
+    "test": "NODE_ENV=test mocha api/user/user.spec.js --timeout 10000",
     "start": "node bin/www.js"
   },
   "author": "",

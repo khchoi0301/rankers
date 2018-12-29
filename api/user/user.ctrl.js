@@ -1,4 +1,4 @@
-const models = require('../../models')
+const models = require('../../models/index')
 
 const index = function (req, res) {
   req.query.limit = req.query.limit || 10
@@ -46,11 +46,12 @@ const destroy = (req, res) => {
 }
 
 const create = (req, res) => {
-  const name = req.body.name
-  if (!name) return res.status(400).end()
+  const email = req.body.email
+
+  if (!email) return res.status(400).end()
 
   models.User
-    .create({ name })
+    .create(req.body)
     .then(user => {
       res.status(201).json(user);
     })
@@ -66,16 +67,16 @@ const update = (req, res) => {
   const id = parseInt(req.params.id, 10)
   if (Number.isNaN(id)) return res.status(400).end()
 
-  const name = req.body.name
-  if (!name) return res.status(400).end()
+  const email = req.body.email
+  if (!email) return res.status(400).end()
 
   models.User
     .findOne({ where: { id } })
     .then(user => {
       if (!user) return res.status(404).end()
 
-      user.name = name
-      user.save()
+      // console.log('user-before', user.dataValues)
+      user.update(req.body)
         .then(user => {
           res.json(user)
         })
