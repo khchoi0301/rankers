@@ -4,7 +4,7 @@ var morgan = require('morgan')
 var bodyParser = require('body-parser')
 var user = require('./api/user/index')
 var service = require('./api/service/index')
-
+var review = require('./api/review/index')
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'))
@@ -17,5 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/users', user)
 //Service API
 app.use('/service', service)
+//Review API
+app.use('/review', review)
 
 module.exports = app

@@ -47,11 +47,8 @@ describe('GET /service', () => {
 
 describe('GET /service/:id', () => {
 
-  before(() => models.sequelize.sync({ force: true }))
-  before(() => models.Service.bulkCreate(services))
-
   describe('성공시', () => {
-    it('id가 1인 유저 객체를 반환한다', (done) => {
+    it('id가 1인 객체를 반환한다', (done) => {
       request(app)
         .get('/service/1')
         .end((err, res) => {
@@ -79,9 +76,6 @@ describe('GET /service/:id', () => {
 })
 
 describe('DELETE /service/:id', () => {
-
-  before(() => models.sequelize.sync({ force: true }))
-  before(() => models.Service.bulkCreate(services))
 
   describe('성공시', () => {
     it('204를 응답한다', (done) => {

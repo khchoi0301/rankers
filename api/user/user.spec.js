@@ -45,9 +45,6 @@ describe('GET /users', () => {
 
 describe('GET /users/:id', () => {
 
-  before(() => models.sequelize.sync({ force: true }))
-  before(() => models.User.bulkCreate(users))
-
   describe('성공시', () => {
     it('id가 1인 유저 객체를 반환한다', (done) => {
       request(app)
@@ -77,9 +74,6 @@ describe('GET /users/:id', () => {
 })
 
 describe('DELETE /users/:id', () => {
-
-  before(() => models.sequelize.sync({ force: true }))
-  before(() => models.User.bulkCreate(users))
 
   describe('성공시', () => {
     it('204를 응답한다', (done) => {

@@ -46,9 +46,6 @@ const destroy = (req, res) => {
 }
 
 const create = (req, res) => {
-  const email = req.body.email
-
-  if (!email) return res.status(400).end()
 
   models.User
     .create(req.body)
@@ -58,6 +55,9 @@ const create = (req, res) => {
     .catch(err => {
       if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(409).end()
+      }
+      if (err.name === 'SequelizeValidationError') {
+        return res.status(400).end()
       }
       res.status(500).end()
     })
@@ -83,6 +83,9 @@ const update = (req, res) => {
         .catch(err => {
           if (err.name === 'SequelizeUniqueConstraintError') {
             return res.status(409).end()
+          }
+          if (err.name === 'SequelizeValidationError') {
+            return res.status(400).end()
           }
           res.status(500).end()
         })
