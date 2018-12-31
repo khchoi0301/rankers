@@ -7,12 +7,13 @@ const index = function (req, res) {
     return res.status(400).end()
   }
 
-  models.Service
-    .findAll({
-      limit: limit
+  models.Review
+    .findAll({ limit })
+    .then(reviews => {
+      res.json(reviews)
     })
-    .then(services => {
-      res.json(services)
+    .catch((err) => {
+      console.log(err)
     })
 }
 
@@ -20,13 +21,13 @@ const show = (req, res) => {
   const id = parseInt(req.params.id, 10)
   if (Number.isNaN(id)) return res.status(400).end()
 
-  models.Service
+  models.Review
     .findOne({
       where: { id }
     })
-    .then(service => {
-      if (!service) return res.status(404).end();
-      res.json(service)
+    .then(review => {
+      if (!review) return res.status(404).end();
+      res.json(review)
     })
 }
 
@@ -34,7 +35,7 @@ const destroy = (req, res) => {
   const id = parseInt(req.params.id, 10)
   if (Number.isNaN(id)) return res.status(400).end()
 
-  models.Service
+  models.Review
     .destroy({
       where: { id }
     })
@@ -45,13 +46,13 @@ const destroy = (req, res) => {
 
 const create = (req, res) => {
 
-  models.Service
+  models.Review
     .create(req.body)
-    .then(service => {
-      res.status(201).json(service);
+    .then(review => {
+      res.status(201).json(review);
     })
     .catch(err => {
-      if (err.name === 'SequelizeUniqueConstraintError') {
+      if (err.name === 'SequelizeUniqueConstraintError' || err.name === 'SequelizeForeignKeyConstraintError') {
         return res.status(409).end()
       }
       if (err.name === 'SequelizeValidationError') {
@@ -65,21 +66,19 @@ const update = (req, res) => {
   const id = parseInt(req.params.id, 10)
   if (Number.isNaN(id)) return res.status(400).end()
 
-  const service = req.body.service
-  if (!service) return res.status(400).end()
-
-  models.Service
+  models.Review
     .findOne({ where: { id } })
-    .then(service => {
-      if (!service) return res.status(404).end()
+    .then(review => {
+      if (!review) return res.status(404).end()
 
-      // console.log('service-before', service.dataValues)
-      service.update(req.body)
-        .then(service => {
-          res.json(service)
+      // console.log('review-before', review.dataValues)
+      review.update(req.body)
+        .then(review => {
+          // console.log('review-after', review.dataValues)
+          res.json(review)
         })
         .catch(err => {
-          if (err.name === 'SequelizeUniqueConstraintError') {
+          if (err.name === 'SequelizeUniqueConstraintError' || err.name === 'SequelizeForeignKeyConstraintError') {
             return res.status(409).end()
           }
           if (err.name === 'SequelizeValidationError') {

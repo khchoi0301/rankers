@@ -10,7 +10,7 @@ const services = [{ service: 'wedding city', location: 'seoul', profile: 'img.jp
 
 const sync = () => sequelize.sync({ force: true })
 const addUsers = () => User.bulkCreate(users)
-const addReviews = () => Review.bulkCreate(reviews)
 const addServices = () => Service.bulkCreate(services)
+const addReviews = () => Review.bulkCreate(reviews)
 
 module.exports = { sync, addUsers, addReviews, addServices }
